@@ -1,10 +1,8 @@
-import { BrowserRouter,Routes,Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom'; // React Router のインポートを追加
 import'./App.css';
-import { useState } from 'react'
 import TopPage from './TopPage';
 
 function App() {
-  const [selected, setSelected] = useState<string | null>(null);
 
     return (
         <Routes>

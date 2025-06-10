@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Klee+One&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Klee+One&display=swap');
+
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
