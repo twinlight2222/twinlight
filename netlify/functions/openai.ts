@@ -1,10 +1,9 @@
+import OpenAI from 'openai';
 import { Handler } from '@netlify/functions';
-import { Configuration, OpenAIApi } from 'openai';
 
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
 
 const handler: Handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -17,24 +16,16 @@ const handler: Handler = async (event) => {
   try {
     const { messages } = JSON.parse(event.body || '{}');
 
-    const completion = await openai.createChatCompletion({
+    const completion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages,
     });
 
-    const message = completion.data.choices[0].message?.content || '';
+    const message = completion.choices[0].message.content;
 
     return {
       statusCode: 200,
       body: JSON.stringify({ message }),
     };
   } catch (error) {
-    console.error('API error:', error);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ message: 'サーバーでエラーが発生しました。' }),
-    };
-  }
-};
-
-export { handler };
+    console.error('API error:',
