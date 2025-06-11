@@ -161,10 +161,10 @@ export default function EstelleChat() {
 
     const userMessage = { role: "user", content: input };
     const fullMessages = [
-      { role: "system", content: systemPrompt },
-      ...messages,
-      userMessage
-    ];
+  { role: "system" as const, content: systemPrompt },
+  ...messages,
+  userMessage as Message 
+];
 
     setMessages([...messages, userMessage]);
     setInput("");
