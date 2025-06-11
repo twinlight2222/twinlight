@@ -159,11 +159,14 @@ export default function EstelleChat() {
 - 出力文は一読して理解でき、心に届く表現であること
 - 長く続くひらがな表記（7文字以上）は避け、読みやすさを優先する`;
 
-    const userMessage = { role: "user", content: input };
+    const userMessage: Message = {
+        role: "user",
+        content: inputText,
+};
     const fullMessages = [
   { role: "system" as const, content: systemPrompt },
   ...messages,
-  userMessage as Message 
+  userMessage as Message // ここで明示的に型をつける
 ];
 
     setMessages([...messages, userMessage]);
