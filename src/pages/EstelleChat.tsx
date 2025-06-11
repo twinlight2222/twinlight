@@ -115,8 +115,8 @@
 import { useState } from "react";
 
 interface Message {
-  role: systemRole as "user" | "assistant" | "system",
-  content: systemPrompt,
+  role: "user" | "assistant" | "system";
+  content: string;
 }
 
 export default function EstelleChat() {
