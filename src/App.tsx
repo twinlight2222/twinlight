@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Diagnosis from "./Diagnosis";
-import MenuLinks from "./MenuLinks";
-import Chat from "./components/Chat";
 import'./App.css';
 import TopPage from './TopPage';
 
