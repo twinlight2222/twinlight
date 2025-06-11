@@ -1,7 +1,7 @@
 // src/pages/TopPage.tsx
+import DiagnosisButton from './components/DiagnosisButton';
 import Logo from './components/Logo';
 import WelcomeMessage from './components/WelcomeMessage';
-import DiagnosisButton from './components/DiagnosisButton';
 import ContactLink from './components/ContactLink'; 
 import { Link } from 'react-router-dom';
 import './TopPage.css';
