@@ -115,7 +115,7 @@
 import { useState } from "react";
 
 interface Message {
-  role: "user" | "assistant";
+  role: "user" | "assistant" | "system";
   content: string;
 }
 
