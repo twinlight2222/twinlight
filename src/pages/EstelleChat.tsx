@@ -174,7 +174,7 @@ export default function EstelleChat() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/openai", {
+      const res = await fetch("/.netlify/functions/openai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: fullMessages }),
