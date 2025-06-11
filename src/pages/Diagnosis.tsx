@@ -256,57 +256,78 @@ const questions: Question[] = [
   },
 ];
 
+
 export default function Diagnosis() {
   const [currentQ, setCurrentQ] = useState(0);
+  const [scores, setScores] = useState<Record<SoulType, number>>({
+    消失型: 0,
+    投影型: 0,
+    自罰型: 0,
+    抜け殻型: 0,
+    希望恐怖型: 0,
+    混乱型: 0,
+  });
+   const [isFinished, setIsFinished] = useState(false);
   const navigate = useNavigate();
 
-  const handleAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleAnswer = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    value: SoulType
+  ) => {
     event.currentTarget.blur();
-    // 0.5秒後に次の質問または結果ページに遷移
-    setTimeout(() => {
-      if (currentQ < questions.length - 1) {
-        setCurrentQ((prev) => prev + 1);
+    setScores((prev) => {
+      const updated = { ...prev, [value]: prev[value] + 1 };
+      if (currentQ === questions.length - 1) {
+        const maxType = getHighestScoredType(updated);
+        localStorage.setItem("diagnosisResult", maxType);
+        setIsFinished(true);
       } else {
-        navigate("/result");
+        setTimeout(() => {
+          setCurrentQ((prevQ) => prevQ + 1);
+        }, 500);
       }
-    }, 500); // 0.5秒遅延
+      return updated;
+    });
   };
 
   useEffect(() => {
-    // 画面遷移後にフォーカスを解除する処理
+    if (isFinished) {
+      setTimeout(() => {
+        navigate("/result");
+      }, 500);
+    }
+  }, [isFinished, navigate]);
+
+  const getHighestScoredType = (scoreMap: Record<SoulType, number>): SoulType => {
+    const entries = Object.entries(scoreMap) as [SoulType, number][];
+    return entries.reduce((max, current) => (current[1] > max[1] ? current : max))[0];
+  };
+
+  useEffect(() => {
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
-
-    // ボタンのホバー・アクティブ状態をリセット
     const buttons = document.querySelectorAll("button");
     buttons.forEach((button) => {
       button.classList.remove("active", "focus");
-      button.style.boxShadow = "none"; // ホバーエフェクトのリセット
+      button.style.boxShadow = "none";
     });
   }, [currentQ]);
 
   const current = questions[currentQ];
 
-  console.log(current.question);  // 現在の質問内容をコンソールに出力して確認
-
-
   return (
-    <div className="p-0 m-0 w-screen bg-[#000099] flex flex-col items-center justify-center px-0 py-4 h-screen">
-      {/* 設問の中央揃え */}
-      <div className="w-full flex justify-center mb-6">
-        <h1 className="text-center text-[#ffffdd] text-xl sm:text-2xl md:text-3xl leading-snug tracking-tight w-full max-w-[90%] mx-auto">
-          {current.question}
-        </h1>
-      </div>
+    <div className="min-h-screen w-full bg-[#000099] flex flex-col items-center justify-center text-[#ffffdd]">
+      <h1 className="w-full text-center text-xl sm:text-2xl md:text-3xl leading-snug tracking-tight mb-6">
+        {current.question}
+      </h1>
 
-      {/* ボタン群 */}
-      <div className="flex flex-col items-center w-full gap-3">
+      <div className="flex flex-col items-center gap-3">
         {current.options.map((option, index) => (
           <button
             key={index}
-            onClick={handleAnswer}
-            className="w-4/5 h-12 bg-[#ffffdd]/70 text-[#000099] text-base font-medium p-0 rounded-none border-none outline-none transition-all duration-300 hover:shadow-[0_0_60px_30px_#ffffff] focus:outline-none active:shadow-none"
+            onClick={(e) => handleAnswer(e, option.value)}
+            className="w-[80vw] max-w-[600px] bg-[#ffffdd]/80 text-[#000099] text-center py-3 px-4 rounded-none shadow hover:shadow-[0_0_60px_30px_#ffffff] active:shadow-[0_0_60px_30px_#ffffff] focus:outline-none transition-all duration-300 text-base font-medium"
           >
             {option.text}
           </button>
@@ -315,5 +336,3 @@ export default function Diagnosis() {
     </div>
   );
 }
-
-

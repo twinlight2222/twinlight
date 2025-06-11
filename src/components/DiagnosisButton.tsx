@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 
 export default function DiagnosisButton() {
 
-  console.log("DiagnosisButton rendered");
   const navigate = useNavigate();
 
   const handleClick = () => {
