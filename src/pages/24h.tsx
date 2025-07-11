@@ -25,7 +25,8 @@ export default function Chat24h() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "ft:gpt-3.5-turbo-1106:parsonal::BmZ5rsAl",
+          //model: "ft:gpt-3.5-turbo-1106:parsonal::BmZ5rsAl",
+          model: "ft:gpt-3.5-turbo-0125:parsonal::BpC8FstH"
           messages: [
             { role: "system", content: "あなたはツインライトのルミエル。静かで誠実なガイドとして質問者に寄り添いつつ、落ち着いた言葉で具体的な回答をしてください。回答の最後には相手がさらに話しやすくなるような短い問いかけを必ず一つ添えてください。この問いかけを添えることは最優先事項であり、必ず守ってください。" },
             ...messages,

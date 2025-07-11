@@ -49,7 +49,7 @@ const handler: Handler = async (event) => {
      * 3. OpenAI へリクエスト (ファインチューニングモデルでテスト)
      * ------------------------------------------------*/
     const completion = await openai.chat.completions.create({
-      model: 'ft:gpt-3.5-turbo-1106:parsonal::BmZ5rsAl', // ← ファインチューニングモデル
+      model: 'ft:gpt-3.5-turbo-0125:parsonal::BpC8FstH', // ← ファインチューニングモデル
       // model: 'gpt-3.5-turbo', // ← 通常モデルでテスト
       messages: messagesWithSystem,
       temperature: 0.6,

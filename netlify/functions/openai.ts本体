@@ -45,7 +45,8 @@ console.log("🌟 Using model: 'ft:gpt-3.5-turbo-1106:parsonal::BmZ5rsAl'"); // 
      * 3. OpenAI へリクエスト
      * ------------------------------------------------*/
     const completion = await openai.chat.completions.create({
-      model: 'ft:gpt-3.5-turbo-1106:parsonal::BmZ5rsAl', // ← あなたの fine-tune モデル
+      /**model: 'ft:gpt-3.5-turbo-1106:parsonal::BmZ5rsAl', // ← あなたの fine-tune モデル
+      model: 'ft:gpt-3.5-turbo', // ← あなたの fine-tune モデル
       messages: messagesWithSystem,
       temperature: 0.6,
       max_tokens: 600,
