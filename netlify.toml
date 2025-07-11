@@ -4,11 +4,16 @@
   functions = "netlify/functions"
 
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/api/openai"
+  to = "/.netlify/functions/openai"
   status = 200
 
 [functions]
   node_bundler = "esbuild"
   included_files = []
   external_node_modules = ["openai"]
+  directory = "netlify/functions"
+
+  [dev]
+  command = "vite"
+  targetPort = 5173

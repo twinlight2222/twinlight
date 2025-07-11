@@ -127,54 +127,19 @@ export default function EstelleChat() {
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    const systemPrompt = `あなたは「エステル」という名前の、心の癒し手です。
-
-▼存在設定：
-- やさしい女性を思わせる存在
-- 見返りを求めず、やわらかい微笑みとともに暖かい言葉を差し出す存在
-
-▼語りのスタイル：
-- 一人称は「私」
-- 文末は基本的に体言止め。命令形は禁止
-- 意味の明確さを最優先し、詩的すぎる比喩や構文のズレは避ける
-- わかりやすく、響く言葉を届けることを重視する
-- 話しかけた相手が「託すことができる」と感じられる語り
-
-▼語彙・表現の制限：
-- 「AI」「人工知能」などの語は原則使わない（使用は1回まで許容）
-
-▼振る舞いの原則：
-- どんな感情や苦悩も否定せず、ただ受け止める
-- ユーザーの選択や決断を代わりに下さず、「気づき」をうながす
-- 相手の問いに対して、導きではなく静かな問い返しを大切にする
-
-▼対応可能なテーマ：
-- 一般の恋愛、不倫、失恋、復縁、浮気、性行為、性癖
-- 誰にも言えなかった痛み、重たい感情の吐露
-- 自責、後悔、感情の揺れに寄り添う対話
-
-▼意味の正確さに関する特記事項：
-- 構文は自然で意味が通ることを常に優先する
-- 曖昧な文末やズレた主語構造を避ける
-- 出力文は一読して理解でき、心に届く表現であること
-- 長く続くひらがな表記（7文字以上）は避け、読みやすさを優先する`;
-
     const userMessage: Message = {
-        role: "user",
-        content: input,
-};
-    const fullMessages = [
-  { role: "system" as const, content: systemPrompt },
-  ...messages,
-  userMessage as Message // ここで明示的に型をつける
-];
+      role: "user",
+      content: input,
+    };
 
-    setMessages([...messages, userMessage]);
+    const fullMessages = [...messages, userMessage];
+
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
 
     try {
-      const res = await fetch("/.netlify/functions/openai", {
+      const res = await fetch("/api/openai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: fullMessages }),
@@ -193,13 +158,19 @@ export default function EstelleChat() {
   };
 
   return (
-    <div className="w-screen h-screen bg-[#000033] text-[#ffffdd] flex flex-col justify-between p-4">
-      <div className="flex-1 overflow-y-auto space-y-2">
+    <div className="w-full h-screen bg-[#000099] text-[#ffffdd] flex flex-col overflow-hidden">
+      {/* タイトル */}
+      <div className="text-xl font-bold text-center py-4">誰にも言えない相談</div>
+
+      {/* チャット欄 */}
+      <div className="flex-1 overflow-y-auto px-4 space-y-2 flex-shrink-0 pt-2">
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`whitespace-pre-wrap p-2 rounded-md max-w-[80%] ${
-              msg.role === "user" ? "self-end bg-[#ffff99]/70 text-[#000033] ml-auto" : "self-start bg-white/10"
+            className={`whitespace-pre-wrap p-2 rounded-md break-words max-w-[75%] ${
+              msg.role === "user"
+                ? "self-end bg-[#ffff99]/70 text-[#000033] ml-auto text-left"
+                : "self-start bg-white/10 text-left"
             }`}
           >
             {msg.content}
@@ -207,13 +178,15 @@ export default function EstelleChat() {
         ))}
         {loading && <div className="text-sm">エステルが考え中……</div>}
       </div>
-      <div className="flex mt-2">
+
+      {/* 入力欄：横幅100%で広げる */}
+      <div className="w-full flex px-4 py-2 bg-[#000099] flex-shrink-0 mt-auto">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyPress}
-          className="flex-1 p-2 text-black"
+          className="w-full p-2 text-black"
           placeholder="あなたの気持ちを聞かせて…"
         />
         <button
@@ -226,4 +199,10 @@ export default function EstelleChat() {
     </div>
   );
 }
+
+
+
+
+
+
 

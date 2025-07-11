@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Klee+One&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -22,7 +20,7 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #000099;
   text-decoration: inherit;
 }
 a:hover {
@@ -31,15 +29,31 @@ a:hover {
 
 body {
   margin: 0;
+  height: 100%;
+  width:100%;
+  padding:0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 1.6em;
   line-height: 1.1;
+}
+
+.24h .container {
+  margin: 0;
+  padding: 0;
+  background-color: #000099;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
 }
 
 button {

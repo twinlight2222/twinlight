@@ -14,7 +14,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-app.post("/.netlify/functions/openai", async (req, res) => {
+app.post("/api/openai", async (req, res) => {
     const userMessage = req.body.message; 
   try {
     const { messages } = req.body;

@@ -1,9 +1,25 @@
 export default function ContactLink() {
   return (
-    <div className="text-center mt-6 mb-10">
+    <div style={{
+      position: "absolute",
+      bottom: "20px",
+      width: "100%",
+      textAlign: "center",
+    }}>
       <a
         href="mailto:info@twinlight.jp"
-        className="text-sm text-yellow-300 underline"
+        style={{
+          fontSize: "12px",
+          color: "rgba(255, 255, 221, 0.6)",
+          textDecoration: "underline",
+          transition: "color 0.3s ease",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.color = "rgba(255, 255, 221, 0.8)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.color = "rgba(255, 255, 221, 0.6)";
+        }}
       >
         お問い合わせはこちら
       </a>
