@@ -14,6 +14,6 @@
   external_node_modules = ["openai"]
   directory = "netlify/functions"
 
-  [dev]
+[dev]
   command = "vite"
   targetPort = 5173
