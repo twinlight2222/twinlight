@@ -6,7 +6,11 @@ client = openai.OpenAI(
 
 response = client.fine_tuning.jobs.create(
     training_file="file-GDPiGkKn3C29XnVeZNzJQx",
+<<<<<<< HEAD
     model="gpt-3.5-turbo-0125:parsonal::BpC8FstH"
+=======
+    model="gpt-3.5-turbo"
+>>>>>>> master
 )
 
 print(response)

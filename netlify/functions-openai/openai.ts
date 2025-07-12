@@ -9,8 +9,12 @@ const handler: Handler = async (event) => {
     const messages = body.messages || [];
 
     const response = await openai.chat.completions.create({
+<<<<<<< HEAD
       // model: 'ft:gpt-3.5-turbo-0125:personal::Blrb1fN2', 
       model: 'ft:gpt-3.5-turbo-0125:parsonal::BpC8FstH', 
+=======
+      model: 'ft:gpt-3.5-turbo-0125:personal::Blrb1fN2', 
+>>>>>>> master
       // openai.ts の try 内で model も出力する
 console.log("🌟 Using model: 'ft:gpt-3.5-turbo-1106:parsonal::BmZ5rsAl'; // ← model 変数を log に出す
 

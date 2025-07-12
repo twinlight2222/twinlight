@@ -3,9 +3,12 @@
   publish = "dist"
   functions = "netlify/functions"
 
+<<<<<<< HEAD
 [build.environment]
   NODE_VERSION = "18"
 
+=======
+>>>>>>> master
 [[redirects]]
   from = "/api/openai"
   to = "/.netlify/functions/openai"
