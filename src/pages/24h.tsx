@@ -14,10 +14,6 @@ export default function Chat24h() {
     if (!input.trim()) return;
     
     const userMessage: Message = { role: "user", content: input };
-    
-    // ユーザーメッセージを先に追加
-
-    const userMessage: Message = { role: "user", content: input };
 
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
