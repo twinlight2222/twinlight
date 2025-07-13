@@ -80,43 +80,39 @@ const completion = await openai.chat.completions.create({
   // 他の設定...
 });
 
-    console.log("🌟 OpenAI response:", completion);
+ console.log("🌟 OpenAI response:", completion);
 
-    const assistantMessage = completion.choices[0].message?.content ?? '';
-    const assistantMessage = completion.choices?.[0]?.message?.content ?? '（返答が取得できませんでした）';
+const assistantMessage = completion.choices?.[0]?.message?.content ?? '（返答が取得できませんでした）';
 
-    return {
-      statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ message: assistantMessage }),
-    };
-  } catch (error: any) {
-    console.error('🔥 GPT ERROR:', error);
-    console.error('🔥 Error details:', {
-      name: error.name,
-      message: error.message,
-      stack: error.stack,
-    });
-    
-    return {
-      statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        message: 'サーバーでエラーが発生しました。',
-        error: error.message ?? 'Unknown error',
-        details: error.toString(),
-      }),
-    };
-  }
+return {
+  statusCode: 200,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    message: assistantMessage
+  }),
 };
 
-export { handler };
+} catch (error) {
+  console.error('Error:', error);
+  
+  return {
+    statusCode: 500,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      message: 'サーバーでエラーが発生しました。',
+      error: error.message ?? 'Unknown error',
+      details: error.toString(),
+    }),
+  };
+}
+};
+
 export { handler };
