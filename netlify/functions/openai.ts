@@ -112,7 +112,7 @@ return {
       details: error.toString(),
     }),
   };
-}
-};
+}  // ← catch文の終わり
+}; // ← handler関数の終わり（これはOK）
 
 export { handler };
