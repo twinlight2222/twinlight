@@ -1,9 +1,9 @@
 
 // netlify/functions/openai.ts
 
-import OpenAI from 'openai';
-import { Handler } from '@netlify/functions';
-import * as dotenv from 'dotenv';
+iconst OpenAI = require('openai');
+const dotenv = require('dotenv');
+
 dotenv.config();
 
 // OpenAI クライアント初期化
@@ -19,7 +19,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const handler: Handler = async (event) => {
+const handler = async (event) => {
   // CORSプリフライト対応
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -115,4 +115,4 @@ return {
 }  // ← catch文の終わり
 }; // ← handler関数の終わり（これはOK）
 
-export { handler };
+module.exports = { handler };
