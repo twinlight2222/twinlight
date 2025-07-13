@@ -45,54 +45,40 @@ const handler: Handler = async (event) => {
      * 1. リクエストボディを取得 & バリデーション
      * ------------------------------------------------*/
     const body = JSON.parse(event.body || '{}');
-    const messages = body.messages;
+const messages = body.messages;
 
-    console.log("🌟 Using model: 'ft:gpt-3.5-turbo-1106:parsonal::BmZ5rsAl' (ファインチューニング)");
-    console.log("🌟 Messages:", messages);
+console.log("🌟 Using model: 'ft:gpt-3.5-turbo-1106:parsonal::BmZ5rsAl' (ファインチューニング)");
+console.log("🌟 Messages:", messages);
 
-    // messages が配列でなければ 400
-    if (!process.env.OPENAI_API_KEY) {
-      throw new Error('OpenAI APIキーが設定されていません。');
-    }
+// messages が配列でなければ 400
+if (!process.env.OPENAI_API_KEY) {
+  throw new Error('OpenAI APIキーが設定されていません。');
+}
 
-    const body = JSON.parse(event.body || '{}');
-    const messages = body.messages;
+if (!Array.isArray(messages)) {
+  return {
+    statusCode: 400,
+    body: JSON.stringify({ message: 'messages が配列じゃないよ' }),
+  };
+}
 
-    console.log("🌟 Request body:", body);
-    console.log("🌟 Using model:", body.model);
-    console.log("🌟 Messages:", body.messages); 
+/** -------------------------------------------------
+ * 2. system メッセージを追加
+ * ------------------------------------------------*/
+const messagesWithSystem = [
+     ...messages,
+];
 
-    if (!Array.isArray(messages)) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ message: 'messages が配列じゃないよ' }),
-      };
-    }
+console.log("🌟 Final messages:", messagesWithSystem);
 
-    /** -------------------------------------------------
-     * 2. system メッセージを追加
-     * ------------------------------------------------*/
-    const messagesWithSystem = [
-         ...messages,
-    ];
-
-    console.log("🌟 Final messages:", messagesWithSystem);
-
-    /** -------------------------------------------------
-     * 3. OpenAI へリクエスト (ファインチューニングモデルでテスト)
-     * ------------------------------------------------*/
-    const completion = await openai.chat.completions.create({
-      model: 'ft:gpt-3.5-turbo-0125:parsonal::BpC8FstH', // ← ファインチューニングモデル
-      // model: 'gpt-3.5-turbo', // ← 通常モデルでテスト
-    // 必要なら system メッセージ追加
-    const messagesWithSystem = [...messages];
-
-    const completion = await openai.chat.completions.create({
-      model: 'ft:gpt-3.5-turbo-1106:parsonal::BmZ5rsAl',
-      messages: messagesWithSystem,
-      temperature: 0.6,
-      max_tokens: 600,
-    });
+/** -------------------------------------------------
+ * 3. OpenAI へリクエスト (ファインチューニングモデルでテスト)
+ * ------------------------------------------------*/
+const completion = await openai.chat.completions.create({
+  model: 'ft:gpt-3.5-turbo-1106:parsonal::BmZ5rsAl', // ← ファインチューニングモデル
+  messages: messagesWithSystem, // ← これを追加
+  // 他の設定...
+});
 
     console.log("🌟 OpenAI response:", completion);
 
