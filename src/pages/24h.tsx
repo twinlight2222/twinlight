@@ -124,11 +124,6 @@ export default function Chat24h() {
           flex: 1, 
           overflowY: "auto", 
           padding: "8px 8px 20px 8px", // 下部に余白追加
-      <div
-        style={{
-          flex: 1,
-          overflowY: "auto",
-          padding: "8px 8px 20px 8px",
           display: "flex",
           flexDirection: "column",
           gap: "8px",
