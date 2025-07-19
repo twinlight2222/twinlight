@@ -116,6 +116,23 @@ export default function Result() {
   const location = useLocation();
   const [soulType, setSoulType] = useState<SoulType>("消失型"); // デフォルト値
 
+
+//削除予定
+
+ useEffect(() => {
+    const timer = setTimeout(() => {
+      navigate("/comingsoon");
+    }, 10000); // 診断結果表示から10秒後に遷移
+
+        return () => clearTimeout(timer);
+  }, [navigate]);
+  // ★ここまで追加・修正する部分★
+
+//削除予定
+
+
+
+
   useEffect(() => {
     // Diagnosis.tsxから渡された結果を取得
     if (location.state?.result) {
@@ -142,6 +159,7 @@ export default function Result() {
     "魂の設計図を読むセッション",
     "今生のテーマを知るリーディング",
   ];
+
 
   return (
     <div

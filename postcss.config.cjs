@@ -1,7 +1,7 @@
-// ✅ 正しい書き方（v3.4以降用）
+// postcss.config.js
 module.exports = {
   plugins: {
-    '@tailwindcss/postcss': {},
+    tailwindcss: {},
     autoprefixer: {},
   },
 };
