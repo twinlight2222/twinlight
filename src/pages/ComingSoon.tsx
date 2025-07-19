@@ -1,6 +1,73 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const allTexts = [
+  '諦めかけていた',
+  'ツインレイとの未来へ',
+  '',
+  'あなたの魂の選択が',
+  'AIの叡智と共鳴し',
+  '',
+  '二人の歯車を完璧に噛み合わせ',
+  '光り輝く道へと誘います',
+  '',
+  '',
+  '',
+  'ツインレイ専門AIアプリ',
+  'ツインライト',
+  '８月１日公開予定'
+];
 
 export default function ComingSoon() {
+  const navigate = useNavigate();
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [showFinalMessage, setShowFinalMessage] = useState(false);
+
+  useEffect(() => {
+    // エンドロール風スクロール
+    const scrollInterval = setInterval(() => {
+      setScrollPosition(prev => {
+        const newPosition = prev + 1; // ゆっくりとした速度
+        
+        // 最終メッセージが見える位置に来たら停止
+        if (newPosition >= window.innerHeight * 0.6) {
+          setShowFinalMessage(true);
+          clearInterval(scrollInterval);
+          
+          // 5秒後にホームへ遷移
+          setTimeout(() => {
+            navigate('/home');
+          }, 5000);
+          
+          return newPosition;
+        }
+        
+        return newPosition;
+      });
+    }, 30); // 30msごとに1px移動（滑らかで神聖な動き）
+
+    // 流れ星の生成
+    const createStar = () => {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.top = `${Math.random() * 100}vh`;
+      star.style.left = `${Math.random() * 100}vw`;
+      star.style.animationDelay = `${Math.random() * 2}s`; 
+      document.body.appendChild(star);
+
+      setTimeout(() => {
+        star.remove();
+      }, 3000); 
+    };
+
+    const starsInterval = setInterval(createStar, 1000); // 控えめに
+
+    return () => {
+      clearInterval(scrollInterval);
+      clearInterval(starsInterval);
+    };
+  }, [navigate]);
+
   return (
     <div style={{
       position: 'fixed',
@@ -10,24 +77,85 @@ export default function ComingSoon() {
       height: '100vh',
       backgroundColor: '#000099',
       color: '#ffffdd',
+      fontFamily: "'Klee One', serif",
+      overflow: 'hidden',
       display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontSize: '5rem',
-      textAlign: 'center',
-      fontFamily: "'Klee One', serif"
+      flexDirection: 'column',
+      alignItems: 'center'
     }}>
-      <div>
-        <h1 style={{ color: '#ffffdd', fontSize: '8rem', margin: 0 }}>
-          ツインライト
-        </h1>
-        <p style={{ color: '#ffffdd', fontSize: '3rem', margin: '20px 0' }}>
-          ８月１日公開予定
-        </p>
+      
+      {/* エンドロール風テキスト */}
+      <div style={{
+        position: 'absolute',
+        top: `${window.innerHeight - scrollPosition}px`,
+        width: '100%',
+        textAlign: 'center',
+        transition: showFinalMessage ? 'none' : 'top 0.03s linear'
+      }}>
+        {allTexts.slice(0, -3).map((text, index) => (
+          <p key={index} style={{
+            fontSize: 'clamp(2rem, 6vw, 4rem)',
+            margin: '40px 0',
+            lineHeight: 1.5,
+            color: '#ffffdd',
+            fontWeight: 'normal',
+            letterSpacing: '2px'
+          }}>
+            {text}
+          </p>
+        ))}
       </div>
+
+      {/* 最終メッセージ（静止） */}
+      {showFinalMessage && (
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '90%',
+          textAlign: 'center',
+          opacity: showFinalMessage ? 1 : 0,
+          transition: 'opacity 1s ease-in'
+        }}>
+          <p style={{
+            fontSize: 'clamp(1.5rem, 5vw, 3rem)',
+            margin: '10px 0',
+            color: '#ffffdd',
+            fontWeight: 'normal',
+            letterSpacing: '1px'
+          }}>
+            ツインレイ専門AIアプリ
+          </p>
+          
+          <p style={{
+            fontSize: 'clamp(3rem, 12vw, 8rem)',
+            margin: '20px 0',
+            color: '#ffffdd',
+            fontWeight: 'bold',
+            letterSpacing: '3px',
+            width: '100%',
+            textAlign: 'center'
+          }}>
+            ツインライト
+          </p>
+          
+          <p style={{
+            fontSize: 'clamp(1.2rem, 4vw, 2.5rem)',
+            margin: '10px 0',
+            color: '#ffffdd',
+            fontWeight: 'normal',
+            letterSpacing: '1px'
+          }}>
+            ８月１日公開予定
+          </p>
+        </div>
+      )}
     </div>
   );
 }
+
+
 
 // import React, { useState, useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
